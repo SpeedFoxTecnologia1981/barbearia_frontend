@@ -165,14 +165,14 @@ export class BookingStorageService {
   private triggerBrowserNotification(booking: BookingAppointment): void {
     if (typeof window !== 'undefined' && 'Notification' in window) {
       if (Notification.permission === 'granted') {
-        new Notification('Barbearia Navalha & Ouro', {
+        new Notification('Barbearia Julius', {
           body: `Agendamento confirmado para ${booking.date} às ${booking.time}! Esperamos por você.`,
           icon: '/favicon.ico'
         });
       } else if (Notification.permission !== 'denied') {
         Notification.requestPermission().then(permission => {
           if (permission === 'granted') {
-            new Notification('Barbearia Navalha & Ouro', {
+            new Notification('Barbearia Julius', {
               body: `Agendamento confirmado para ${booking.date} às ${booking.time}!`,
               icon: '/favicon.ico'
             });

@@ -128,7 +128,7 @@ export class BarberDataService {
       name: 'Bruno Cavalcanti',
       clientRole: 'Designer',
       rating: 5,
-      comment: 'O fade do Gabriel é perfeito! Ele tem uma atenção aos detalhes que poucos profissionais têm. Super recomendo a Barbearia Navalha & Ouro!',
+      comment: 'O fade do Gabriel é perfeito! Ele tem uma atenção aos detalhes que poucos profissionais têm. Super recomendo a Barbearia Julius!',
       date: 'Há 2 semanas',
       avatarInitial: 'BC'
     }
@@ -154,11 +154,11 @@ export class BarberDataService {
   ];
 
   readonly info = {
-    name: 'Navalha & Ouro Barbearia',
+    name: 'Barbearia Julius',
     phone: '(11) 98765-4321',
     whatsappUrl: 'https://wa.me/5511987654321?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20Barbearia',
     address: 'Av. Paulista, 1842 - Bela Vista, São Paulo - SP',
     schedule: 'Segunda a Sábado: 09:00 às 20:00 | Domingo: 10:00 às 15:00',
-    instagram: '@navalhaeouro.barbearia'
+    instagram: '@barbeariajulius'
   };
 }
