@@ -1,0 +1,75 @@
+<section id="servicos" class="services-section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-tag badge-gold">
+        <span>MENU DE SERVIÇOS EXCLUSIVOS</span>
+      </div>
+      <h2>Arte, Estilo & <span class="gradient-text-gold">Precisão da Lâmina</span></h2>
+      <p>Selecione o serviço ideal para você. Todos os atendimentos incluem lavagem prévia, toalha quente e bebida cortesia.</p>
+    </div>
+
+    <!-- Filtros de Categoria -->
+    <div class="categories-filter-bar">
+      <button 
+        *ngFor="let cat of categories" 
+        class="filter-pill-btn"
+        [class.active]="selectedCategory() === cat.id"
+        (click)="selectCategory(cat.id)"
+      >
+        {{ cat.label }}
+      </button>
+    </div>
+
+    <!-- Grid de Serviços -->
+    <div class="services-grid">
+      <div 
+        class="service-card glass-card" 
+        *ngFor="let item of filteredServices()"
+        [class.popular-card]="item.popular"
+      >
+        <!-- Tag de Mais Popular -->
+        <div class="popular-badge" *ngIf="item.popular">
+          <span>★ MAIS PEDIDO</span>
+        </div>
+
+        <!-- Imagem do Serviço -->
+        <div class="service-img-wrapper" *ngIf="item.image">
+          <img [src]="item.image" [alt]="item.name" class="service-img" loading="lazy" />
+          <div class="service-img-gradient"></div>
+          <span class="service-duration-badge">⏱️ {{ item.durationMinutes }} min</span>
+        </div>
+
+        <!-- Conteúdo do Serviço -->
+        <div class="service-card-body">
+          <div class="service-header-row">
+            <h3 class="service-name">{{ item.name }}</h3>
+            <div class="service-price">
+              <span class="currency">R$</span>
+              <span class="amount">{{ item.price }}</span>
+              <span class="cents">,00</span>
+            </div>
+          </div>
+
+          <p class="service-desc">{{ item.description }}</p>
+
+          <div class="service-card-footer">
+            <div class="service-features-mini">
+              <span>✓ Toalha Quente</span>
+              <span>✓ Bebida Free</span>
+            </div>
+            
+            <button class="btn-gold btn-book-service" (click)="bookService(item)">
+              <span>Agendar</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

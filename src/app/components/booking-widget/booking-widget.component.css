@@ -1,0 +1,477 @@
+.booking-section {
+  padding: 6.5rem 0;
+  position: relative;
+  background: var(--bg-surface);
+}
+
+.booking-card-main {
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: rgba(18, 18, 24, 0.85);
+  border: 1px solid var(--border-gold);
+}
+
+.booking-layout-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* Etapas do Formulário */
+.booking-form-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.step-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  color: #0b0b0e;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-label h4 {
+  font-size: 1.15rem;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+/* Chips de Serviços */
+.services-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+.service-chip-btn {
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  transition: all 0.25s ease;
+}
+
+.service-chip-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(205, 162, 53, 0.4);
+}
+
+.service-chip-btn.selected {
+  background: rgba(205, 162, 53, 0.12);
+  border-color: var(--gold-400);
+  box-shadow: 0 0 15px var(--gold-glow-subtle);
+}
+
+.chip-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.chip-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.chip-duration {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.chip-price {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-400);
+}
+
+/* Chips de Barbeiros */
+.barbers-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.barber-chip-btn {
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: left;
+}
+
+.barber-chip-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(205, 162, 53, 0.4);
+}
+
+.barber-chip-btn.selected {
+  background: rgba(205, 162, 53, 0.12);
+  border-color: var(--gold-400);
+}
+
+.barber-chip-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--gold-500);
+}
+
+.barber-chip-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chip-barber-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.chip-barber-rating {
+  font-size: 0.72rem;
+  color: var(--gold-300);
+}
+
+/* Data & Horários */
+.datetime-inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.input-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.custom-date-input {
+  padding: 0.85rem 1.1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  width: 100%;
+  max-width: 280px;
+}
+
+.custom-date-input:focus {
+  border-color: var(--gold-400);
+}
+
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.6rem;
+}
+
+.time-slot-btn {
+  padding: 0.65rem 0.4rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.time-slot-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--gold-500);
+}
+
+.time-slot-btn.selected {
+  background: var(--gold-gradient);
+  color: #0b0b0e;
+  border-color: transparent;
+  font-weight: 800;
+  box-shadow: 0 2px 10px var(--gold-glow);
+}
+
+/* Campos de Contato */
+.client-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.custom-text-input {
+  padding: 0.85rem 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.custom-text-input:focus {
+  border-color: var(--gold-400);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Sidebar Resumo */
+.booking-summary-sidebar {
+  position: sticky;
+  top: 100px;
+}
+
+.summary-card-inner {
+  background: rgba(12, 12, 16, 0.95);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.summary-title {
+  font-size: 1.25rem;
+  color: #ffffff;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.summary-label {
+  color: var(--text-muted);
+}
+
+.summary-val {
+  color: #ffffff;
+  font-weight: 600;
+  text-align: right;
+}
+
+.highlight-time {
+  color: var(--gold-300);
+}
+
+.summary-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.perk-pill {
+  font-size: 0.78rem;
+  color: var(--gold-400);
+  background: rgba(205, 162, 53, 0.08);
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+}
+
+.summary-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.summary-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.summary-total-price {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--gold-400);
+}
+
+.btn-confirm-booking {
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.98rem;
+}
+
+.summary-security-note {
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Sucesso & Voucher */
+.booking-success-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.success-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.15);
+  border: 2px solid var(--success);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.success-title {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+}
+
+.success-subtitle {
+  color: var(--text-muted);
+  max-width: 520px;
+  margin-bottom: 2.2rem;
+}
+
+.voucher-card {
+  width: 100%;
+  max-width: 540px;
+  background: rgba(14, 14, 18, 0.95);
+  border: 1px dashed var(--border-gold);
+  border-radius: 14px;
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.voucher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.2rem;
+}
+
+.voucher-code {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--gold-400);
+}
+
+.voucher-status {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--success);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.voucher-body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.voucher-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.v-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.v-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+@media (max-width: 992px) {
+  .booking-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .services-chips-grid {
+    grid-template-columns: 1fr;
+  }
+  .times-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .booking-card-main {
+    padding: 1.5rem;
+  }
+  .barbers-chips-grid {
+    grid-template-columns: 1fr;
+  }
+  .times-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .client-fields-grid {
+    grid-template-columns: 1fr;
+  }
+  .voucher-body {
+    grid-template-columns: 1fr;
+  }
+}

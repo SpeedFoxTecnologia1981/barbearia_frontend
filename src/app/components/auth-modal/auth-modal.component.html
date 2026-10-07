@@ -1,0 +1,93 @@
+<div class="modal-backdrop" *ngIf="bookingStorage.isAuthModalOpen()" (click)="close()">
+  <div class="modal-dialog-box glass-card" (click)="$event.stopPropagation()">
+    
+    <button class="modal-close-btn" (click)="close()" aria-label="Fechar Modal">✕</button>
+
+    <!-- Cabeçalho & Abas -->
+    <div class="auth-tabs-header">
+      <button 
+        type="button"
+        class="tab-btn" 
+        [class.active]="!isRegisterTab" 
+        (click)="switchTab(false)"
+      >
+        Entrar na Conta
+      </button>
+      <button 
+        type="button"
+        class="tab-btn" 
+        [class.active]="isRegisterTab" 
+        (click)="switchTab(true)"
+      >
+        Criar Nova Conta
+      </button>
+    </div>
+
+    <!-- Formulário -->
+    <div class="auth-form-body">
+      
+      <!-- Nome (se cadastro) -->
+      <div class="modal-field" *ngIf="isRegisterTab">
+        <label>Nome Completo *</label>
+        <input 
+          type="text" 
+          class="modal-input" 
+          placeholder="Ex: Carlos Eduardo" 
+          [(ngModel)]="name" 
+        />
+      </div>
+
+      <!-- E-mail -->
+      <div class="modal-field">
+        <label>E-mail *</label>
+        <input 
+          type="email" 
+          class="modal-input" 
+          placeholder="seuemail@exemplo.com" 
+          [(ngModel)]="email" 
+        />
+      </div>
+
+      <!-- Telefone / WhatsApp (se cadastro) -->
+      <div class="modal-field" *ngIf="isRegisterTab">
+        <label>WhatsApp / Celular *</label>
+        <input 
+          type="tel" 
+          class="modal-input" 
+          placeholder="(11) 99999-9999" 
+          [(ngModel)]="phone" 
+        />
+      </div>
+
+      <!-- Senha -->
+      <div class="modal-field">
+        <label>Senha *</label>
+        <input 
+          type="password" 
+          class="modal-input" 
+          placeholder="••••••••" 
+          [(ngModel)]="password" 
+        />
+      </div>
+
+      <div class="auth-remember-row" *ngIf="!isRegisterTab">
+        <label class="remember-label">
+          <input type="checkbox" checked /> Lembrar meu acesso
+        </label>
+        <a href="javascript:void(0)" class="forgot-link text-gold">Esqueceu a senha?</a>
+      </div>
+
+      <button class="btn-gold w-100 btn-submit-auth" (click)="submitAuth()">
+        {{ isRegisterTab ? 'Finalizar Cadastro & Conectar' : 'Acessar Barbearia' }}
+      </button>
+
+      <div class="auth-perks-box">
+        <span>⭐ Agende em 1 clique</span>
+        <span>💈 Histórico de cortes</span>
+        <span>🎁 Pontos de fidelidade</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>

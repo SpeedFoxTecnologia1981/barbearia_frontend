@@ -1,0 +1,33 @@
+<section id="depoimentos" class="testimonials-section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-tag badge-gold">
+        <span>AVALIAÇÕES REAIS DE CLIENTES</span>
+      </div>
+      <h2>A Voz de Quem Já Viveu a <span class="gradient-text-gold">Experiência</span></h2>
+      <p>Mais de 15.000 clientes satisfeitos em nossa história de paixão pela cutelaria e estilo.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card glass-card" *ngFor="let t of barberData.testimonials">
+        
+        <div class="stars-row">
+          <span class="gold-star" *ngFor="let s of [1,2,3,4,5]">★</span>
+        </div>
+
+        <p class="testimonial-text">"{{ t.comment }}"</p>
+
+        <div class="client-meta">
+          <div class="client-avatar">{{ t.avatarInitial }}</div>
+          <div class="client-details">
+            <span class="client-name">{{ t.name }}</span>
+            <span class="client-role">{{ t.clientRole }} • <small>{{ t.date }}</small></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

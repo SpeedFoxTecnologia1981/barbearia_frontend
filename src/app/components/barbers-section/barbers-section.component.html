@@ -1,0 +1,52 @@
+<section id="barbeiros" class="barbers-section">
+  <div class="container">
+    
+    <div class="section-header">
+      <div class="section-tag badge-gold">
+        <span>MESTRES DA NAVALHA</span>
+      </div>
+      <h2>Nossa Equipe de <span class="gradient-text-gold">Especialistas</span></h2>
+      <p>Profissionais experientes, dedicados a transformar seu corte em uma obra de arte personalizada.</p>
+    </div>
+
+    <div class="barbers-grid">
+      <div class="barber-card glass-card" *ngFor="let barber of barberData.barbers">
+        
+        <!-- Foto do Barbeiro -->
+        <div class="barber-img-container">
+          <img [src]="barber.photo" [alt]="barber.name" class="barber-photo" loading="lazy" />
+          <div class="barber-rating-tag">
+            <span class="star-icon">★</span>
+            <span class="rating-value">{{ barber.rating }}</span>
+            <span class="reviews-count">({{ barber.totalReviews }})</span>
+          </div>
+          <span class="experience-badge">{{ barber.experienceYears }} Anos de Exp.</span>
+        </div>
+
+        <!-- Dados e Especialidades -->
+        <div class="barber-info">
+          <h3 class="barber-name">{{ barber.name }}</h3>
+          <span class="barber-role text-gold">{{ barber.role }}</span>
+          <p class="barber-bio">{{ barber.bio }}</p>
+
+          <div class="specialties-wrap">
+            <span class="specialty-pill" *ngFor="let spec of barber.specialties">
+              {{ spec }}
+            </span>
+          </div>
+
+          <button class="btn-outline-gold btn-select-barber" (click)="selectBarber(barber)">
+            <span>Agendar com {{ barber.name.split(' ')[0] }}</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

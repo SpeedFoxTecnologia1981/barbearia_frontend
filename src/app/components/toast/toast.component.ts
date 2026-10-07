@@ -1,0 +1,18 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BookingStorageService } from '../../services/booking-storage.service';
+
+@Component({
+  selector: 'app-toast',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './toast.component.html',
+  styleUrl: './toast.component.css'
+})
+export class ToastComponent {
+  constructor(public bookingStorage: BookingStorageService) {}
+
+  close(): void {
+    this.bookingStorage.clearToast();
+  }
+}

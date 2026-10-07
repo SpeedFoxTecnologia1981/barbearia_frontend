@@ -1,0 +1,112 @@
+<header class="navbar-wrapper" [class.scrolled]="isScrolled">
+  <div class="container navbar-container">
+    
+    <!-- Marca / Logo -->
+    <a href="#" class="brand-logo" (click)="scrollToSection('hero')">
+      <div class="logo-icon-wrap">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"></circle>
+          <circle cx="6" cy="18" r="3"></circle>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand-title">NAVALHA <span class="text-gold">&</span> OURO</span>
+        <span class="brand-subtitle">BARBEARIA TRADICIONAL</span>
+      </div>
+    </a>
+
+    <!-- Status Aberto & Indicador -->
+    <div class="live-status-pill">
+      <span class="status-online-dot"></span>
+      <span class="status-text">Aberto Hoje até 20:00</span>
+    </div>
+
+    <!-- Navegação Desktop -->
+    <nav class="desktop-nav">
+      <button class="nav-link" (click)="scrollToSection('servicos')">Serviços</button>
+      <button class="nav-link" (click)="scrollToSection('barbeiros')">Barbeiros</button>
+      <button class="nav-link" (click)="scrollToSection('diferenciais')">Diferenciais</button>
+      <button class="nav-link" (click)="scrollToSection('depoimentos')">Avaliações</button>
+      <button class="nav-link" (click)="scrollToSection('agendamento')">Agendamento</button>
+      <button class="nav-link" (click)="scrollToSection('meus-agendamentos')" *ngIf="bookingStorage.appointments().length > 0">
+        Meus Cortes
+        <span class="count-tag">{{ bookingStorage.appointments().length }}</span>
+      </button>
+    </nav>
+
+    <!-- Ações / Autenticação & CTA -->
+    <div class="nav-actions">
+      <!-- Usuário Conectado ou Botão Entrar -->
+      <ng-container *ngIf="bookingStorage.currentUser() as user; else notLogged">
+        <div class="user-profile-badge">
+          <div class="user-avatar-circle">{{ user.name.charAt(0).toUpperCase() }}</div>
+          <span class="user-greeting">{{ user.name.split(' ')[0] }}</span>
+          <button class="btn-logout" (click)="logout()" title="Sair da conta">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #notLogged>
+        <button class="btn-auth" (click)="openAuth()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Entrar
+        </button>
+      </ng-template>
+
+      <!-- Botão Agendar Dourado -->
+      <button class="btn-gold btn-book-now" (click)="openBooking()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>Agendar Horário</span>
+      </button>
+
+      <!-- Botão Mobile Hambúrguer -->
+      <button class="btn-mobile-toggle" (click)="toggleMobileMenu()" [class.open]="isMobileMenuOpen" aria-label="Abrir Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div class="mobile-menu-drawer" [class.show]="isMobileMenuOpen">
+    <div class="mobile-nav-links">
+      <button (click)="scrollToSection('hero')">Início</button>
+      <button (click)="scrollToSection('servicos')">Serviços & Preços</button>
+      <button (click)="scrollToSection('barbeiros')">Nossa Equipe</button>
+      <button (click)="scrollToSection('diferenciais')">Diferenciais</button>
+      <button (click)="scrollToSection('depoimentos')">Avaliações</button>
+      <button (click)="scrollToSection('agendamento')">Agendar Horário</button>
+      <button (click)="scrollToSection('meus-agendamentos')" *ngIf="bookingStorage.appointments().length > 0">
+        Meus Agendamentos ({{ bookingStorage.appointments().length }})
+      </button>
+      <button (click)="scrollToSection('localizacao')">Localização & Contato</button>
+    </div>
+
+    <div class="mobile-drawer-footer">
+      <button class="btn-gold w-100" (click)="openBooking()">
+        ✂️ Agendar Meu Horário
+      </button>
+      <button class="btn-auth-mobile" (click)="openAuth()" *ngIf="!bookingStorage.currentUser()">
+        👤 Entrar na Conta
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,70 @@
+<section id="meus-agendamentos" class="my-bookings-section" *ngIf="bookingStorage.appointments().length > 0">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-tag badge-gold">
+        <span>SEUS HORÁRIOS RESERVADOS</span>
+      </div>
+      <h2>Seus <span class="gradient-text-gold">Agendamentos</span></h2>
+      <p>Acompanhe os detalhes dos seus cortes marcados. Apresente o código na recepção ao chegar.</p>
+    </div>
+
+    <div class="appointments-cards-grid">
+      <div 
+        class="appointment-card glass-card"
+        *ngFor="let item of bookingStorage.appointments()"
+        [class.status-cancelled]="item.status === 'cancelado'"
+      >
+        <div class="appointment-card-header">
+          <div class="app-code">
+            <span class="code-label">CÓDIGO:</span>
+            <span class="code-num">{{ item.id }}</span>
+          </div>
+          <span 
+            class="app-status-badge"
+            [class.badge-confirmed]="item.status === 'confirmado'"
+            [class.badge-cancelled]="item.status === 'cancelado'"
+          >
+            {{ item.status === 'confirmado' ? '● Confirmado' : '✕ Cancelado' }}
+          </span>
+        </div>
+
+        <div class="appointment-card-body">
+          <h3 class="app-service-name">{{ item.serviceName }}</h3>
+          
+          <div class="app-meta-row">
+            <div class="meta-item">
+              <span class="meta-icon">👤</span>
+              <span class="meta-text">Barbeiro: <strong>{{ item.barberName }}</strong></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">📅</span>
+              <span class="meta-text">Data: <strong>{{ item.date }}</strong></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">⏰</span>
+              <span class="meta-text">Horário: <strong class="text-gold">{{ item.time }}</strong></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">💵</span>
+              <span class="meta-text">Valor: <strong class="text-gold">R$ {{ item.price }},00</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="appointment-card-footer">
+          <span class="app-client-info">Titular: {{ item.clientName }}</span>
+          <button 
+            *ngIf="item.status === 'confirmado'"
+            class="btn-cancel-app" 
+            (click)="cancelAppointment(item.id)"
+          >
+            Cancelar Horário
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,67 @@
+<footer class="app-footer">
+  <div class="container footer-content-grid">
+    
+    <!-- Coluna 1: Marca & Manifesto -->
+    <div class="footer-col brand-col">
+      <div class="footer-brand">
+        <div class="footer-logo-icon">✂️</div>
+        <div>
+          <span class="f-brand-title">NAVALHA <span class="text-gold">&</span> OURO</span>
+          <span class="f-brand-sub">BARBEARIA CONCEITO</span>
+        </div>
+      </div>
+      <p class="footer-bio">
+        Excelência em estética masculina, atendimento de alto padrão e ambiente feito para quem valoriza estilo e autenticidade.
+      </p>
+      <div class="footer-social-links">
+        <a [href]="barberData.info.whatsappUrl" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="WhatsApp">
+          💬
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Instagram">
+          📸
+        </a>
+        <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Localização no Maps">
+          🗺️
+        </a>
+      </div>
+    </div>
+
+    <!-- Coluna 2: Navegação Rápida -->
+    <div class="footer-col">
+      <h4 class="footer-col-title">Navegação</h4>
+      <ul class="footer-links-list">
+        <li><button (click)="scrollTo('hero')">Início</button></li>
+        <li><button (click)="scrollTo('servicos')">Serviços & Preços</button></li>
+        <li><button (click)="scrollTo('barbeiros')">Mestres Barbeiros</button></li>
+        <li><button (click)="scrollTo('diferenciais')">Nossos Diferenciais</button></li>
+        <li><button (click)="scrollTo('agendamento')">Agendamento Online</button></li>
+      </ul>
+    </div>
+
+    <!-- Coluna 3: Horários & Regras -->
+    <div class="footer-col">
+      <h4 class="footer-col-title">Atendimento</h4>
+      <p class="footer-info-text">Segunda a Sábado: 09:00 às 20:00</p>
+      <p class="footer-info-text">Domingo: 10:00 às 15:00</p>
+      <p class="footer-info-text text-gold mt-2">Estacionamento conveniado no local</p>
+    </div>
+
+    <!-- Coluna 4: Endereço & Botão Topo -->
+    <div class="footer-col">
+      <h4 class="footer-col-title">Onde Estamos</h4>
+      <p class="footer-info-text">{{ barberData.info.address }}</p>
+      <p class="footer-info-text text-gold">{{ barberData.info.phone }}</p>
+      <button class="btn-outline-gold btn-back-top" (click)="scrollToTop()">
+        ↑ Voltar ao Topo
+      </button>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom-bar">
+    <div class="container footer-bottom-container">
+      <p>© {{ currentYear }} Navalha & Ouro Barbearia. Todos os direitos reservados.</p>
+      <p class="developer-credit">Desenvolvido com maestria por <strong>Raquel Gomes</strong></p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,107 @@
+<div class="modal-backdrop" *ngIf="bookingStorage.isBookingModalOpen()" (click)="close()">
+  <div class="modal-dialog-box glass-card" (click)="$event.stopPropagation()">
+    
+    <!-- Botão Fechar Modal -->
+    <button class="modal-close-btn" (click)="close()" aria-label="Fechar Modal">✕</button>
+
+    <!-- Cabeçalho do Modal -->
+    <div class="modal-header">
+      <div class="badge-gold modal-badge">
+        <span>RESERVA VIP</span>
+      </div>
+      <h2 class="modal-title">Agendar Seu <span class="gradient-text-gold">Horário</span></h2>
+    </div>
+
+    <!-- Conteúdo: Formulário -->
+    <div *ngIf="!isCompleted" class="modal-body-form">
+      
+      <!-- Seleção de Serviço -->
+      <div class="modal-field">
+        <label>1. Serviço Desejado</label>
+        <select class="custom-select" [(ngModel)]="selectedServiceId">
+          <option *ngFor="let s of barberData.services" [value]="s.id">
+            {{ s.name }} — R$ {{ s.price }},00 ({{ s.durationMinutes }} min)
+          </option>
+        </select>
+      </div>
+
+      <!-- Seleção de Barbeiro -->
+      <div class="modal-field">
+        <label>2. Barbeiro</label>
+        <select class="custom-select" [(ngModel)]="selectedBarberId">
+          <option *ngFor="let b of barberData.barbers" [value]="b.id">
+            {{ b.name }} ({{ b.role }})
+          </option>
+        </select>
+      </div>
+
+      <!-- Data e Horário -->
+      <div class="modal-row-two">
+        <div class="modal-field">
+          <label>3. Data</label>
+          <input type="date" class="modal-input" [(ngModel)]="selectedDate" />
+        </div>
+        <div class="modal-field">
+          <label>4. Horário</label>
+          <div class="modal-times-pills">
+            <button 
+              type="button"
+              *ngFor="let t of availableTimes" 
+              class="pill-time"
+              [class.active]="selectedTime === t"
+              (click)="selectTime(t)"
+            >
+              {{ t }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dados do Cliente -->
+      <div class="modal-row-two">
+        <div class="modal-field">
+          <label>Seu Nome *</label>
+          <input type="text" class="modal-input" placeholder="Seu Nome" [(ngModel)]="clientName" />
+        </div>
+        <div class="modal-field">
+          <label>WhatsApp / Celular *</label>
+          <input type="tel" class="modal-input" placeholder="(11) 99999-9999" [(ngModel)]="clientPhone" />
+        </div>
+      </div>
+
+      <!-- Resumo rápido -->
+      <div class="modal-quick-summary">
+        <div>
+          <span class="m-sum-label">Total a pagar:</span>
+          <span class="m-sum-price">R$ {{ activeService?.price }},00</span>
+        </div>
+        <div class="m-perks-mini">
+          <span>☕ Café/Chopp Grátis</span>
+          <span>♨️ Toalha Quente</span>
+        </div>
+      </div>
+
+      <!-- Botão de Ação -->
+      <div class="modal-footer-actions">
+        <button class="btn-gold w-100" (click)="confirmBooking()">
+          ✂️ Confirmar Reserva de Horário
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Conteúdo: Concluído -->
+    <div *ngIf="isCompleted" class="modal-body-success">
+      <div class="success-icon-modal">✓</div>
+      <h3>Agendamento Concluído!</h3>
+      <p>Seu código exclusivo de reserva é:</p>
+      <div class="vip-code-tag">{{ confirmedCode }}</div>
+      <p class="success-hint">Apresente este código na chegada à barbearia. Te aguardamos!</p>
+      
+      <button class="btn-gold w-100" (click)="close()">
+        Fechar e Voltar ao Início
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<section id="diferenciais" class="features-section">
+  <div class="container">
+    
+    <div class="section-header">
+      <div class="section-tag badge-gold">
+        <span>POR QUE ESCOLHER A NAVALHA & OURO</span>
+      </div>
+      <h2>O Padrão Ouro em <span class="gradient-text-gold">Cuidado Masculino</span></h2>
+      <p>Elevamos o conceito de barbearia para um momento de relaxamento, estilo impecável e bem-estar.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card glass-card" *ngFor="let item of features">
+        <div class="feature-icon-wrapper">
+          <span class="feature-emoji">{{ item.icon }}</span>
+        </div>
+        <span class="feature-tag">{{ item.highlight }}</span>
+        <h3 class="feature-title">{{ item.title }}</h3>
+        <p class="feature-desc">{{ item.description }}</p>
+      </div>
+    </div>
+
+  </div>
+</section>
