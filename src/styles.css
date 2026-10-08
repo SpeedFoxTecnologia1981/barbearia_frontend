@@ -269,6 +269,15 @@ input, select, textarea {
   animation: pulseDot 2s infinite ease-in-out;
 }
 
+.status-offline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+  display: inline-block;
+}
+
 @keyframes floatElement {
   0%, 100% {
     transform: translateY(0px);

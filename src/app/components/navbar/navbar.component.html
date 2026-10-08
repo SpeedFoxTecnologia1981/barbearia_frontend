@@ -20,8 +20,8 @@
 
     <!-- Status Aberto & Indicador -->
     <div class="live-status-pill">
-      <span class="status-online-dot"></span>
-      <span class="status-text">Aberto Hoje até 20:00</span>
+      <span [class.status-online-dot]="isOpenToday" [class.status-offline-dot]="!isOpenToday"></span>
+      <span class="status-text">{{ isOpenToday ? 'Aberto Hoje até 20:30' : 'Aos Domingos estamos fechados' }}</span>
     </div>
 
     <!-- Navegação Desktop -->
@@ -90,7 +90,7 @@
     <div class="mobile-nav-links">
       <button (click)="scrollToSection('hero')">Início</button>
       <button (click)="scrollToSection('servicos')">Serviços & Preços</button>
-      <button (click)="scrollToSection('barbeiros')">Nossa Equipe</button>
+      <button (click)="scrollToSection('barbeiros')">O Especialista</button>
       <button (click)="scrollToSection('diferenciais')">Diferenciais</button>
       <button (click)="scrollToSection('depoimentos')">Avaliações</button>
       <button (click)="scrollToSection('agendamento')">Agendar Horário</button>

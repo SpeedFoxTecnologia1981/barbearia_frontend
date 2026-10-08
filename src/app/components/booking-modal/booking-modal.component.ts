@@ -27,7 +27,8 @@ export class BookingModalComponent {
   confirmedCode: string = '';
 
   readonly availableTimes = [
-    '09:00', '10:00', '11:00', '13:30', '14:15', '15:00', '16:00', '17:00', '18:00', '19:00'
+    '07:30', '08:30', '09:30', '10:30', '11:30',
+    '13:30', '14:30', '15:30', '16:30', '17:30', '18:30', '19:45'
   ];
 
   constructor(
@@ -35,7 +36,11 @@ export class BookingModalComponent {
     public barberData: BarberDataService,
     private audioService: AudioService
   ) {
-    this.selectedDate = new Date().toISOString().split('T')[0];
+    const initialDate = new Date();
+    if (initialDate.getDay() === 0) {
+      initialDate.setDate(initialDate.getDate() + 1);
+    }
+    this.selectedDate = initialDate.toISOString().split('T')[0];
 
     // Effect reativo para sincronizar seleção prévia ao abrir modal
     effect(() => {
@@ -78,6 +83,15 @@ export class BookingModalComponent {
     if (!this.clientName.trim() || !this.clientPhone.trim()) {
       alert('Por favor informe seu nome e telefone.');
       return;
+    }
+
+    if (this.selectedDate) {
+      const [year, month, day] = this.selectedDate.split('-').map(Number);
+      const chosenDate = new Date(year, month - 1, day);
+      if (chosenDate.getDay() === 0) {
+        alert('Aos Domingos estamos fechados! Por favor, selecione uma data de Segunda a Sábado.');
+        return;
+      }
     }
 
     const s = this.activeService;

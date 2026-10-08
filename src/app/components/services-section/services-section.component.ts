@@ -18,9 +18,7 @@ export class ServicesSectionComponent {
   readonly categories = [
     { id: 'todos', label: 'Todos os Serviços' },
     { id: 'cabelo', label: 'Cortes & Cabelo' },
-    { id: 'barba', label: 'Barba & Navalha' },
-    { id: 'combos', label: 'Combos VIP' },
-    { id: 'tratamento', label: 'Tratamentos & Spa' }
+    { id: 'combos', label: 'Combos VIP' }
   ];
 
   readonly filteredServices = computed(() => {

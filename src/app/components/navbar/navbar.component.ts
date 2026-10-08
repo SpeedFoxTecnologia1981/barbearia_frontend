@@ -13,6 +13,7 @@ import { AudioService } from '../../services/audio.service';
 export class NavbarComponent {
   isScrolled = false;
   isMobileMenuOpen = false;
+  readonly isOpenToday = new Date().getDay() !== 0;
 
   constructor(
     public bookingStorage: BookingStorageService,

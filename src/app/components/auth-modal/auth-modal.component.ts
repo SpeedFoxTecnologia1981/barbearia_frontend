@@ -54,7 +54,7 @@ export class AuthModalComponent {
       this.bookingStorage.saveUser({
         name: userName.charAt(0).toUpperCase() + userName.slice(1),
         email: this.email,
-        phone: this.phone || '(11) 99876-5432'
+        phone: this.phone || '(31) 98020-8758'
       });
     }
 

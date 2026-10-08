@@ -28,9 +28,8 @@ export class BookingWidgetComponent implements OnInit {
   confirmationData: any = null;
 
   readonly availableTimes = [
-    '09:00', '09:45', '10:30', '11:15',
-    '13:30', '14:15', '15:00', '15:45',
-    '16:30', '17:15', '18:00', '19:00'
+    '07:30', '08:15', '09:00', '10:00', '11:00',
+    '13:30', '14:30', '15:30', '16:30', '17:30', '18:30', '19:45'
   ];
 
   constructor(
@@ -40,8 +39,11 @@ export class BookingWidgetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Definir data padrão para hoje
+    // Definir data padrão para hoje (se for domingo, avançar para segunda-feira)
     const today = new Date();
+    if (today.getDay() === 0) {
+      today.setDate(today.getDate() + 1);
+    }
     this.selectedDate = today.toISOString().split('T')[0];
 
     // Se houver usuário logado, preencher campos automaticamente
@@ -80,6 +82,15 @@ export class BookingWidgetComponent implements OnInit {
     if (!this.clientName.trim() || !this.clientPhone.trim()) {
       alert('Por favor, informe seu nome e telefone para o agendamento.');
       return;
+    }
+
+    if (this.selectedDate) {
+      const [year, month, day] = this.selectedDate.split('-').map(Number);
+      const chosenDate = new Date(year, month - 1, day);
+      if (chosenDate.getDay() === 0) {
+        alert('Aos Domingos estamos fechados! Por favor, selecione uma data de Segunda a Sábado.');
+        return;
+      }
     }
 
     const service = this.currentSelectedService;

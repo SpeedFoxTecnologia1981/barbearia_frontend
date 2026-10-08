@@ -17,16 +17,6 @@ export class BarberDataService {
       image: '/images/corte.jpg'
     },
     {
-      id: 'barba-terapia',
-      name: 'Design de Barba & Terapia Facial',
-      category: 'barba',
-      durationMinutes: 40,
-      price: 45,
-      description: 'Aquece a pele com vaporizador de ozônio, desenho preciso na navalha tradicional, óleo hidratante e massagem facial.',
-      popular: true,
-      image: '/images/barba.jpg'
-    },
-    {
       id: 'combo-imperial',
       name: 'Combo Imperial (Cabelo + Barba Completa)',
       category: 'combos',
@@ -42,29 +32,9 @@ export class BarberDataService {
       category: 'cabelo',
       durationMinutes: 45,
       price: 50,
-      description: 'Técnica tradicional executada 100% na tesoura, respeitando o caimento natural dos fios e visagismo do rosto.',
+      description: 'Técnica tradicional executada 100% na tesoura, respeitando o caimento e alinhamento natural dos fios.',
       popular: false,
       image: '/images/corte.jpg'
-    },
-    {
-      id: 'platinado-nevou',
-      name: 'Platinado / Nevou Master',
-      category: 'tratamento',
-      durationMinutes: 120,
-      price: 160,
-      description: 'Descoloração global segura com proteção capilar de alta performance, matização acinzentada e hidratação profunda.',
-      popular: false,
-      image: '/images/corte.jpg'
-    },
-    {
-      id: 'spa-facial-sobrancelha',
-      name: 'Spa Facial com Ozônio & Sobrancelha',
-      category: 'tratamento',
-      durationMinutes: 30,
-      price: 35,
-      description: 'Esfoliação com vapor de ozônio, máscara de carvão ativado para remoção de cravos e alinhamento simétrico da sobrancelha.',
-      popular: false,
-      image: '/images/barba.jpg'
     }
   ];
 
@@ -78,7 +48,7 @@ export class BarberDataService {
       totalReviews: 840,
       photo: '/images/barbeiro1.jpg',
       bio: 'Especialista em cortes clássicos executivos e barba rústica italiana na navalha afiada.',
-      specialties: ['Navalha Clássica', 'Barboterapia', 'Visagismo']
+      specialties: ['Navalha Clássica', 'Corte Tradicional']
     }
   ];
 
@@ -133,10 +103,10 @@ export class BarberDataService {
 
   readonly info = {
     name: 'Barbearia Julius',
-    phone: '(11) 98765-4321',
-    whatsappUrl: 'https://wa.me/5511987654321?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20Barbearia',
-    address: 'Av. Paulista, 1842 - Bela Vista, São Paulo - SP',
-    schedule: 'Segunda a Sábado: 09:00 às 20:00 | Domingo: 10:00 às 15:00',
+    phone: '(31) 98020-8758',
+    whatsappUrl: 'https://wa.me/5531980208758?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20Barbearia',
+    address: 'Rua Dirceu Martins Figueiredo 72, Jequitibá/ MG',
+    schedule: 'Segunda a Sábado: 07:30 às 20:30 | Aos Domingos estamos fechados',
     instagram: '@barbeariajulius'
   };
 }

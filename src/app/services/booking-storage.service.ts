@@ -46,7 +46,7 @@ export class BookingStorageService {
             date: new Date().toISOString().split('T')[0],
             time: '16:00',
             clientName: 'Raquel Gomes',
-            clientPhone: '(11) 99887-6655',
+            clientPhone: '(31) 99887-6655',
             clientEmail: 'raquel@exemplo.com',
             price: 90,
             status: 'confirmado',
