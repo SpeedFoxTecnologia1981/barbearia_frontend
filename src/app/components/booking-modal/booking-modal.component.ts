@@ -15,7 +15,7 @@ import { ServiceItem, BarberStaff } from '../../models/barber.models';
 })
 export class BookingModalComponent {
   selectedServiceId: string = 'corte-degrade';
-  selectedBarberId: string = 'marcos-silva';
+  selectedBarberId: string = 'julius';
   selectedDate: string = '';
   selectedTime: string = '14:15';
   

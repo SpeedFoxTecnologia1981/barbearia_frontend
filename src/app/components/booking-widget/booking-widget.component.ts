@@ -15,7 +15,7 @@ import { ServiceItem, BarberStaff } from '../../models/barber.models';
 })
 export class BookingWidgetComponent implements OnInit {
   selectedServiceId: string = 'combo-imperial';
-  selectedBarberId: string = 'marcos-silva';
+  selectedBarberId: string = 'julius';
   selectedDate: string = '';
   selectedTime: string = '15:00';
   

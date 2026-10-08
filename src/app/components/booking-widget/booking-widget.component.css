@@ -111,13 +111,12 @@
 
 /* Chips de Barbeiros */
 .barbers-chips-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 0.85rem;
 }
 
 .barber-chip-btn {
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-subtle);
@@ -125,6 +124,8 @@
   align-items: center;
   gap: 0.8rem;
   text-align: left;
+  max-width: 380px;
+  width: 100%;
 }
 
 .barber-chip-btn:hover {
@@ -462,8 +463,8 @@
   .booking-card-main {
     padding: 1.5rem;
   }
-  .barbers-chips-grid {
-    grid-template-columns: 1fr;
+  .barber-chip-btn {
+    max-width: 100%;
   }
   .times-grid {
     grid-template-columns: repeat(3, 1fr);

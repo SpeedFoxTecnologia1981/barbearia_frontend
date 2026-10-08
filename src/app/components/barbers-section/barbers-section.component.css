@@ -5,8 +5,8 @@
 }
 
 .barbers-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: center;
   gap: 2.2rem;
 }
 
@@ -14,6 +14,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  max-width: 440px;
+  width: 100%;
 }
 
 .barber-img-container {
@@ -124,14 +126,8 @@
   width: 100%;
 }
 
-@media (max-width: 992px) {
-  .barbers-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 600px) {
-  .barbers-grid {
-    grid-template-columns: 1fr;
+  .barber-card {
+    max-width: 100%;
   }
 }

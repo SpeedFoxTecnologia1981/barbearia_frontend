@@ -40,9 +40,9 @@ export class BookingStorageService {
           {
             id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
             serviceId: 'combo-imperial',
-            serviceName: 'Combo Imperial (Cabelo + Barba + Bebida)',
-            barberId: 'marcos-silva',
-            barberName: 'Marcos "Navalha" Silva',
+            serviceName: 'Combo Imperial (Cabelo + Barba Completa)',
+            barberId: 'julius',
+            barberName: 'Julius',
             date: new Date().toISOString().split('T')[0],
             time: '16:00',
             clientName: 'Raquel Gomes',

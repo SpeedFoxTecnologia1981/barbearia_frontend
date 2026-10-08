@@ -19,6 +19,10 @@ export class BarbersSectionComponent {
     private audioService: AudioService
   ) {}
 
+  get displayedBarbers(): BarberStaff[] {
+    return this.barberData.barbers.slice(0, 1);
+  }
+
   selectBarber(barber: BarberStaff): void {
     this.audioService.playClickSound();
     this.bookingStorage.openBookingModal(undefined, barber);

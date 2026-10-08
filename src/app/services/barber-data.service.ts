@@ -18,21 +18,21 @@ export class BarberDataService {
     },
     {
       id: 'barba-terapia',
-      name: 'Barboterapia & Toalha Quente',
+      name: 'Design de Barba & Terapia Facial',
       category: 'barba',
       durationMinutes: 40,
       price: 45,
-      description: 'Aquece a pele com vaporizador e toalha quente aromática, desenho na navalha tradicional, óleo hidratante e massagem facial.',
+      description: 'Aquece a pele com vaporizador de ozônio, desenho preciso na navalha tradicional, óleo hidratante e massagem facial.',
       popular: true,
       image: '/images/barba.jpg'
     },
     {
       id: 'combo-imperial',
-      name: 'Combo Imperial (Cabelo + Barba + Bebida)',
+      name: 'Combo Imperial (Cabelo + Barba Completa)',
       category: 'combos',
       durationMinutes: 75,
       price: 90,
-      description: 'O combo mais desejado: Corte estilizado completo + Barboterapia relaxante + Cerveja artesanal ou café expresso cortesia.',
+      description: 'O combo mais desejado: Corte estilizado completo com alinhamento minucioso e acabamento impecável da barba.',
       popular: true,
       image: '/images/hero.jpg'
     },
@@ -70,8 +70,8 @@ export class BarberDataService {
 
   readonly barbers: BarberStaff[] = [
     {
-      id: 'marcos-silva',
-      name: 'Marcos "Navalha" Silva',
+      id: 'julius',
+      name: 'Julius',
       role: 'Master Barber & Fundador',
       experienceYears: 12,
       rating: 4.98,
@@ -79,28 +79,6 @@ export class BarberDataService {
       photo: '/images/barbeiro1.jpg',
       bio: 'Especialista em cortes clássicos executivos e barba rústica italiana na navalha afiada.',
       specialties: ['Navalha Clássica', 'Barboterapia', 'Visagismo']
-    },
-    {
-      id: 'gabriel-santos',
-      name: 'Gabriel Santos',
-      role: 'Especialista em Fade & FreeStyle',
-      experienceYears: 7,
-      rating: 4.95,
-      totalReviews: 615,
-      photo: '/images/barbeiro2.jpg',
-      bio: 'Referência em degradês perfeitos (Skin Fade, Taper Fade), texturização e tendências urbanas.',
-      specialties: ['Skin Fade', 'Colorimetria', 'Platinado']
-    },
-    {
-      id: 'lucas-alencar',
-      name: 'Lucas Alencar',
-      role: 'Hair Stylist & Barbeiro VIP',
-      experienceYears: 5,
-      rating: 4.91,
-      totalReviews: 430,
-      photo: '/images/barbeiro1.jpg',
-      bio: 'Focado em técnicas modernas de tesoura, tratamento capilar com ozônio e design de barbas.',
-      specialties: ['Corte na Tesoura', 'Tratamentos', 'Design de Barba']
     }
   ];
 
@@ -110,7 +88,7 @@ export class BarberDataService {
       name: 'Rodrigo Medeiros',
       clientRole: 'Cliente há 2 anos',
       rating: 5,
-      comment: 'Ambiente sensacional! A toalha quente na barba é um espetáculo à parte, e o corte do Marcos é sempre cirúrgico. Não troco por nenhuma outra.',
+      comment: 'Ambiente sensacional! O cuidado com a barba é um espetáculo à parte, e o corte do Julius é sempre cirúrgico. Não troco por nenhuma outra.',
       date: 'Há 3 dias',
       avatarInitial: 'RM'
     },
@@ -119,7 +97,7 @@ export class BarberDataService {
       name: 'Felipe Albuquerque',
       clientRole: 'Empresário',
       rating: 5,
-      comment: 'O agendamento pelo app é rápido demais e o atendimento é pontual sem atraso. Tomar um café expresso enquanto corto o cabelo não tem preço.',
+      comment: 'O agendamento pelo app é rápido demais e o atendimento é pontual sem atraso. Cortar o cabelo com o Julius com essa qualidade não tem preço.',
       date: 'Há 1 semana',
       avatarInitial: 'FA'
     },
@@ -128,7 +106,7 @@ export class BarberDataService {
       name: 'Bruno Cavalcanti',
       clientRole: 'Designer',
       rating: 5,
-      comment: 'O fade do Gabriel é perfeito! Ele tem uma atenção aos detalhes que poucos profissionais têm. Super recomendo a Barbearia Julius!',
+      comment: 'O fade do Julius é perfeito! Ele tem uma atenção aos detalhes que poucos profissionais têm. Super recomendo a Barbearia Julius!',
       date: 'Há 2 semanas',
       avatarInitial: 'BC'
     }
@@ -148,8 +126,8 @@ export class BarberDataService {
       answer: 'Você pode cancelar ou alterar seu horário facilmente através do aplicativo com até 1 hora de antecedência sem nenhuma taxa.'
     },
     {
-      question: 'Vocês oferecem bebidas de cortesia?',
-      answer: 'Sim! Todos os nossos clientes têm direito a café especial moído na hora, água mineral gelada ou uma cerveja artesanal long neck como cortesia em nossos atendimentos.'
+      question: 'O agendamento garante meu horário exclusivo?',
+      answer: 'Sim! Ao reservar o seu horário pelo aplicativo, você tem atendimento pontual e prioritário garantido com o Julius, sem tempo de espera.'
     }
   ];
 
