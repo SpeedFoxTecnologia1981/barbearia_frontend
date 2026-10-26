@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookingStorageService } from '../../services/booking-storage.service';
 import { AudioService } from '../../services/audio.service';
+import { apiErrorMessage } from '../../services/api.service';
 
 @Component({
   selector: 'app-auth-modal',
@@ -15,9 +16,11 @@ export class AuthModalComponent {
   isRegisterTab: boolean = false;
 
   name: string = '';
-  email: string = '';
+  nickname: string = '';
   phone: string = '';
-  password: string = '';
+
+  loading: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     public bookingStorage: BookingStorageService,
@@ -27,38 +30,53 @@ export class AuthModalComponent {
   switchTab(register: boolean): void {
     this.audioService.playClickSound();
     this.isRegisterTab = register;
+    this.errorMessage = '';
   }
 
   close(): void {
+    this.errorMessage = '';
     this.bookingStorage.closeAuthModal();
   }
 
   submitAuth(): void {
-    if (this.isRegisterTab) {
-      if (!this.name.trim() || !this.email.trim() || !this.phone.trim()) {
-        alert('Preencha os campos obrigatórios para criar sua conta.');
-        return;
-      }
-      this.bookingStorage.saveUser({
-        name: this.name,
-        email: this.email,
-        phone: this.phone
-      });
-    } else {
-      if (!this.email.trim()) {
-        alert('Informe seu e-mail para entrar.');
-        return;
-      }
-      // Login simulado com o nome derivado do e-mail ou padrão
-      const userName = this.name.trim() || this.email.split('@')[0];
-      this.bookingStorage.saveUser({
-        name: userName.charAt(0).toUpperCase() + userName.slice(1),
-        email: this.email,
-        phone: this.phone || '(31) 98020-8758'
-      });
+    const name = this.name.trim();
+    const phone = this.phone.trim();
+    this.errorMessage = '';
+
+    if (!name || !phone) {
+      this.errorMessage = 'Informe seu nome e telefone.';
+      return;
+    }
+    if (this.isRegisterTab && name.length < 3) {
+      this.errorMessage = 'O nome deve ter pelo menos 3 caracteres.';
+      return;
+    }
+    if (phone.replace(/\D/g, '').length < 10) {
+      this.errorMessage = 'Informe o telefone com DDD.';
+      return;
     }
 
-    this.audioService.playSuccessSound();
-    this.close();
+    this.loading = true;
+    const request$ = this.isRegisterTab
+      ? this.bookingStorage.register(name, this.nickname.trim(), phone)
+      : this.bookingStorage.login(name, phone);
+
+    request$.subscribe({
+      next: () => {
+        this.loading = false;
+        this.audioService.playSuccessSound();
+        this.name = '';
+        this.nickname = '';
+        this.phone = '';
+        this.close();
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = apiErrorMessage(
+          err,
+          this.isRegisterTab ? 'Não foi possível criar a conta.' : 'Não foi possível entrar.'
+        );
+      }
+    });
   }
 }

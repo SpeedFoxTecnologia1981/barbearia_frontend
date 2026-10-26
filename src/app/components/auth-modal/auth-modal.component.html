@@ -24,61 +24,55 @@
     </div>
 
     <!-- Formulário -->
-    <div class="auth-form-body">
-      
-      <!-- Nome (se cadastro) -->
-      <div class="modal-field" *ngIf="isRegisterTab">
-        <label>Nome Completo *</label>
-        <input 
-          type="text" 
-          class="modal-input" 
-          placeholder="Ex: Carlos Eduardo" 
-          [(ngModel)]="name" 
-        />
-      </div>
+    <form class="auth-form-body" (ngSubmit)="submitAuth()">
 
-      <!-- E-mail -->
+      <!-- Nome -->
       <div class="modal-field">
-        <label>E-mail *</label>
-        <input 
-          type="email" 
-          class="modal-input" 
-          placeholder="seuemail@exemplo.com" 
-          [(ngModel)]="email" 
+        <label>{{ isRegisterTab ? 'Nome Completo *' : 'Nome *' }}</label>
+        <input
+          type="text"
+          name="name"
+          class="modal-input"
+          placeholder="Ex: Carlos Eduardo"
+          [(ngModel)]="name"
+          autocomplete="name"
         />
       </div>
 
-      <!-- Telefone / WhatsApp (se cadastro) -->
+      <!-- Apelido (se cadastro) -->
       <div class="modal-field" *ngIf="isRegisterTab">
+        <label>Como gosta de ser chamado</label>
+        <input
+          type="text"
+          name="nickname"
+          class="modal-input"
+          placeholder="Ex: Dudu"
+          maxlength="100"
+          [(ngModel)]="nickname"
+        />
+      </div>
+
+      <!-- Telefone / WhatsApp -->
+      <div class="modal-field">
         <label>WhatsApp / Celular *</label>
-        <input 
-          type="tel" 
-          class="modal-input" 
-          placeholder="(31) 98020-8758" 
-          [(ngModel)]="phone" 
+        <input
+          type="tel"
+          name="phone"
+          class="modal-input"
+          placeholder="(31) 98020-8758"
+          [(ngModel)]="phone"
+          autocomplete="tel"
         />
       </div>
 
-      <!-- Senha -->
-      <div class="modal-field">
-        <label>Senha *</label>
-        <input 
-          type="password" 
-          class="modal-input" 
-          placeholder="••••••••" 
-          [(ngModel)]="password" 
-        />
-      </div>
+      <p class="auth-hint" *ngIf="!isRegisterTab">
+        Entre com o mesmo nome e telefone usados no cadastro.
+      </p>
 
-      <div class="auth-remember-row" *ngIf="!isRegisterTab">
-        <label class="remember-label">
-          <input type="checkbox" checked /> Lembrar meu acesso
-        </label>
-        <a href="javascript:void(0)" class="forgot-link text-gold">Esqueceu a senha?</a>
-      </div>
+      <div class="auth-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
 
-      <button class="btn-gold w-100 btn-submit-auth" (click)="submitAuth()">
-        {{ isRegisterTab ? 'Finalizar Cadastro & Conectar' : 'Acessar Barbearia' }}
+      <button type="submit" class="btn-gold w-100 btn-submit-auth" [disabled]="loading">
+        {{ loading ? 'Aguarde...' : (isRegisterTab ? 'Finalizar Cadastro & Conectar' : 'Acessar Barbearia') }}
       </button>
 
       <div class="auth-perks-box">
@@ -87,7 +81,7 @@
         <span>🎁 Pontos de fidelidade</span>
       </div>
 
-    </div>
+    </form>
 
   </div>
 </div>

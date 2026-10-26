@@ -18,9 +18,9 @@
       <!-- Seleção de Serviço -->
       <div class="modal-field">
         <label>1. Serviço Desejado</label>
-        <select class="custom-select" [(ngModel)]="selectedServiceId">
-          <option *ngFor="let s of barberData.services" [value]="s.id">
-            {{ s.name }} — R$ {{ s.price }},00 ({{ s.durationMinutes }} min)
+        <select class="custom-select" [ngModel]="selectedServiceId" (ngModelChange)="onServiceChange($event)">
+          <option *ngFor="let s of barberData.services()" [ngValue]="s.id">
+            {{ s.name }} — {{ s.price | currency:'BRL' }} ({{ s.durationMinutes }} min)
           </option>
         </select>
       </div>
@@ -28,8 +28,8 @@
       <!-- Seleção de Barbeiro -->
       <div class="modal-field">
         <label>2. Barbeiro</label>
-        <select class="custom-select" [(ngModel)]="selectedBarberId">
-          <option *ngFor="let b of barberData.barbers" [value]="b.id">
+        <select class="custom-select" [ngModel]="selectedBarberId" (ngModelChange)="onBarberChange($event)">
+          <option *ngFor="let b of barberData.barbers()" [ngValue]="b.id">
             {{ b.name }} ({{ b.role }})
           </option>
         </select>
@@ -39,41 +39,42 @@
       <div class="modal-row-two">
         <div class="modal-field">
           <label>3. Data</label>
-          <input type="date" class="modal-input" [(ngModel)]="selectedDate" />
+          <input type="date" class="modal-input" [ngModel]="selectedDate" (ngModelChange)="onDateChange($event)" />
         </div>
         <div class="modal-field">
           <label>4. Horário</label>
           <div class="modal-times-pills">
             <button 
               type="button"
-              *ngFor="let t of availableTimes" 
+              *ngFor="let h of horarios" 
               class="pill-time"
-              [class.active]="selectedTime === t"
-              (click)="selectTime(t)"
+              [class.active]="selectedTime === h.hora"
+              [disabled]="!h.disponivel"
+              (click)="selectTime(h.hora)"
             >
-              {{ t }}
+              {{ h.hora }}
             </button>
           </div>
+          <small class="times-hint" *ngIf="carregandoHorarios">Consultando horários...</small>
+          <small class="times-hint" *ngIf="!carregandoHorarios && horarios.length === 0">Sem horários nesta data (domingo fechado).</small>
         </div>
       </div>
 
-      <!-- Dados do Cliente -->
-      <div class="modal-row-two">
-        <div class="modal-field">
-          <label>Seu Nome *</label>
-          <input type="text" class="modal-input" placeholder="Seu Nome" [(ngModel)]="clientName" />
+      <!-- Identificação -->
+      <div class="modal-field">
+        <div class="modal-login-box" *ngIf="bookingStorage.currentUser() as user; else precisaLogin">
+          Agendando como <strong class="text-gold">{{ user.name }}</strong> · {{ user.phone }}
         </div>
-        <div class="modal-field">
-          <label>WhatsApp / Celular *</label>
-          <input type="tel" class="modal-input" placeholder="(31) 98020-8758" [(ngModel)]="clientPhone" />
-        </div>
+        <ng-template #precisaLogin>
+          <div class="modal-login-box">Você precisa entrar na sua conta ao confirmar a reserva.</div>
+        </ng-template>
       </div>
 
       <!-- Resumo rápido -->
       <div class="modal-quick-summary">
         <div>
           <span class="m-sum-label">Total a pagar:</span>
-          <span class="m-sum-price">R$ {{ activeService?.price }},00</span>
+          <span class="m-sum-price">{{ activeService?.price | currency:'BRL' }}</span>
         </div>
         <div class="m-perks-mini">
           <span>⏱️ Atendimento Pontual</span>
@@ -82,8 +83,8 @@
 
       <!-- Botão de Ação -->
       <div class="modal-footer-actions">
-        <button class="btn-gold w-100" (click)="confirmBooking()">
-          ✂️ Confirmar Reserva de Horário
+        <button class="btn-gold w-100" (click)="confirmBooking()" [disabled]="enviando || !selectedTime">
+          {{ enviando ? 'Enviando...' : '✂️ Confirmar Reserva de Horário' }}
         </button>
       </div>
 

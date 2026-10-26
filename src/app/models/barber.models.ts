@@ -1,5 +1,5 @@
 export interface ServiceItem {
-  id: string;
+  id: number;
   name: string;
   category: 'cabelo' | 'barba' | 'combos' | 'tratamento';
   durationMinutes: number;
@@ -11,7 +11,7 @@ export interface ServiceItem {
 }
 
 export interface BarberStaff {
-  id: string;
+  id: number;
   name: string;
   role: string;
   experienceYears: number;
@@ -23,20 +23,18 @@ export interface BarberStaff {
 }
 
 export interface BookingAppointment {
-  id: string;
-  serviceId: string;
+  id: number;
+  /** Código exibido ao cliente, ex.: AG-0012 */
+  code: string;
   serviceName: string;
-  barberId: string;
   barberName: string;
+  /** yyyy-MM-dd */
   date: string;
+  /** HH:mm */
   time: string;
   clientName: string;
-  clientPhone: string;
-  clientEmail?: string;
-  notes?: string;
   price: number;
   status: 'confirmado' | 'cancelado' | 'concluido';
-  createdAt: string;
 }
 
 export interface ClientTestimonial {

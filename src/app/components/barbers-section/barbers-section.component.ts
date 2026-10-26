@@ -20,7 +20,7 @@ export class BarbersSectionComponent {
   ) {}
 
   get displayedBarbers(): BarberStaff[] {
-    return this.barberData.barbers.slice(0, 1);
+    return this.barberData.barbers().slice(0, 1);
   }
 
   selectBarber(barber: BarberStaff): void {

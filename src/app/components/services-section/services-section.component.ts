@@ -24,9 +24,9 @@ export class ServicesSectionComponent {
   readonly filteredServices = computed(() => {
     const cat = this.selectedCategory();
     if (cat === 'todos') {
-      return this.barberData.services;
+      return this.barberData.services();
     }
-    return this.barberData.services.filter(s => s.category === cat);
+    return this.barberData.services().filter(s => s.category === cat);
   });
 
   constructor(

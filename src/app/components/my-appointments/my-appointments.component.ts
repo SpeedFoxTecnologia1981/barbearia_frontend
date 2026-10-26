@@ -16,7 +16,7 @@ export class MyAppointmentsComponent {
     private audioService: AudioService
   ) {}
 
-  cancelAppointment(id: string): void {
+  cancelAppointment(id: number): void {
     if (confirm('Deseja realmente cancelar este agendamento?')) {
       this.bookingStorage.cancelAppointment(id);
     }

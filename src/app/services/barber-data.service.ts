@@ -1,56 +1,84 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BarberStaff, ClientTestimonial, FaqItem, ServiceItem } from '../models/barber.models';
+import { BarbeiroApi, ServicoApi } from '../models/api.models';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BarberDataService {
-  readonly services: ServiceItem[] = [
-    {
-      id: 'corte-degrade',
-      name: 'Corte Fade & Degradê Cirúrgico',
-      category: 'cabelo',
-      durationMinutes: 45,
-      price: 55,
-      description: 'Acabamento minucioso com tesoura e máquina, finalização com pomada matte premium e alinhamento do pezinho.',
-      popular: true,
-      image: '/images/corte.jpg'
-    },
-    {
-      id: 'combo-imperial',
-      name: 'Combo Imperial (Cabelo + Barba Completa)',
-      category: 'combos',
-      durationMinutes: 75,
-      price: 90,
-      description: 'O combo mais desejado: Corte estilizado completo com alinhamento minucioso e acabamento impecável da barba.',
-      popular: true,
-      image: '/images/hero.jpg'
-    },
-    {
-      id: 'corte-tesoura-classico',
-      name: 'Corte Clássico na Tesoura',
-      category: 'cabelo',
-      durationMinutes: 45,
-      price: 50,
-      description: 'Técnica tradicional executada 100% na tesoura, respeitando o caimento e alinhamento natural dos fios.',
-      popular: false,
-      image: '/images/corte.jpg'
-    }
-  ];
+  /** Serviços e barbeiros vêm da API; o restante (fotos, bio, categoria) é apresentação do frontend. */
+  readonly services = signal<ServiceItem[]>([]);
+  readonly barbers = signal<BarberStaff[]>([]);
+  readonly loading = signal<boolean>(true);
+  readonly loadError = signal<boolean>(false);
 
-  readonly barbers: BarberStaff[] = [
-    {
-      id: 'julius',
-      name: 'Julius',
-      role: 'Master Barber & Fundador',
-      experienceYears: 12,
-      rating: 4.98,
-      totalReviews: 840,
-      photo: '/images/barbeiro1.jpg',
-      bio: 'Especialista em cortes clássicos executivos e barba rústica italiana na navalha afiada.',
-      specialties: ['Navalha Clássica', 'Corte Tradicional']
+  constructor(private readonly api: ApiService) {
+    this.reload();
+  }
+
+  reload(): void {
+    this.loading.set(true);
+    this.loadError.set(false);
+    let pending = 2;
+    const done = () => { if (--pending === 0) this.loading.set(false); };
+    const fail = () => { this.loadError.set(true); done(); };
+
+    this.api.listarServicos().subscribe({
+      next: (lista) => { this.services.set(lista.map(s => this.mapServico(s))); done(); },
+      error: fail
+    });
+    this.api.listarBarbeiros().subscribe({
+      next: (lista) => { this.barbers.set(lista.map((b, i) => this.mapBarbeiro(b, i))); done(); },
+      error: fail
+    });
+  }
+
+  private mapServico(s: ServicoApi): ServiceItem {
+    const nome = s.nome.toLowerCase();
+    // Categoria, imagem e destaque ainda não existem no backend: inferidos pelo nome.
+    const category: ServiceItem['category'] =
+      nome.includes('combo') ? 'combos' : nome.includes('barba') ? 'barba' : 'cabelo';
+    const image = category === 'combos' ? '/images/hero.jpg' : category === 'barba' ? '/images/barba.jpg' : '/images/corte.jpg';
+    return {
+      id: s.id,
+      name: s.nome,
+      category,
+      durationMinutes: s.duracaoMinutos,
+      price: Number(s.valor),
+      description: s.descricao ?? '',
+      popular: nome.includes('fade') || nome.includes('combo'),
+      image
+    };
+  }
+
+  private mapBarbeiro(b: BarbeiroApi, index: number): BarberStaff {
+    const isJulius = b.nome.trim().toLowerCase() === 'julius';
+    if (isJulius) {
+      return {
+        id: b.id,
+        name: b.nome,
+        role: 'Master Barber & Fundador',
+        experienceYears: 12,
+        rating: 4.98,
+        totalReviews: 840,
+        photo: '/images/barbeiro1.jpg',
+        bio: 'Especialista em cortes clássicos executivos e barba rústica italiana na navalha afiada.',
+        specialties: ['Navalha Clássica', 'Corte Tradicional']
+      };
     }
-  ];
+    return {
+      id: b.id,
+      name: b.nome,
+      role: 'Barbeiro Profissional',
+      experienceYears: 0,
+      rating: 5,
+      totalReviews: 0,
+      photo: index % 2 === 0 ? '/images/barbeiro1.jpg' : '/images/barbeiro2.jpg',
+      bio: 'Profissional da Barbearia Julius.',
+      specialties: []
+    };
+  }
 
   readonly testimonials: ClientTestimonial[] = [
     {

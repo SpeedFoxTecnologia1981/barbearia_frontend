@@ -21,6 +21,12 @@
       </button>
     </div>
 
+    <p class="services-status" *ngIf="barberData.loading()">Carregando serviços...</p>
+    <p class="services-status" *ngIf="!barberData.loading() && barberData.loadError()">
+      Não foi possível carregar os serviços. Verifique se a API está no ar.
+      <button type="button" class="btn-outline-gold" (click)="barberData.reload()">Tentar novamente</button>
+    </p>
+
     <!-- Grid de Serviços -->
     <div class="services-grid">
       <div 
@@ -46,8 +52,8 @@
             <h3 class="service-name">{{ item.name }}</h3>
             <div class="service-price">
               <span class="currency">R$</span>
-              <span class="amount">{{ item.price }}</span>
-              <span class="cents">,00</span>
+              <span class="amount">{{ item.price | number:'1.0-0' }}</span>
+              <span class="cents">,{{ item.price * 100 % 100 | number:'2.0-0' }}</span>
             </div>
           </div>
 

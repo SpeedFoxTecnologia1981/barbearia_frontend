@@ -18,14 +18,14 @@
         <div class="appointment-card-header">
           <div class="app-code">
             <span class="code-label">CÓDIGO:</span>
-            <span class="code-num">{{ item.id }}</span>
+            <span class="code-num">{{ item.code }}</span>
           </div>
           <span 
             class="app-status-badge"
             [class.badge-confirmed]="item.status === 'confirmado'"
             [class.badge-cancelled]="item.status === 'cancelado'"
           >
-            {{ item.status === 'confirmado' ? '● Confirmado' : '✕ Cancelado' }}
+            {{ item.status === 'confirmado' ? '● Confirmado' : item.status === 'concluido' ? '✓ Concluído' : '✕ Cancelado' }}
           </span>
         </div>
 
@@ -39,7 +39,7 @@
             </div>
             <div class="meta-item">
               <span class="meta-icon">📅</span>
-              <span class="meta-text">Data: <strong>{{ item.date }}</strong></span>
+              <span class="meta-text">Data: <strong>{{ item.date | date:'dd/MM/yyyy' }}</strong></span>
             </div>
             <div class="meta-item">
               <span class="meta-icon">⏰</span>
@@ -47,7 +47,7 @@
             </div>
             <div class="meta-item">
               <span class="meta-icon">💵</span>
-              <span class="meta-text">Valor: <strong class="text-gold">R$ {{ item.price }},00</strong></span>
+              <span class="meta-text">Valor: <strong class="text-gold">{{ item.price | currency:'BRL' }}</strong></span>
             </div>
           </div>
         </div>

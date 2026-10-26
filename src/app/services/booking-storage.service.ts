@@ -1,78 +1,194 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, map, switchMap, tap } from 'rxjs';
 import { BookingAppointment, ServiceItem, BarberStaff } from '../models/barber.models';
+import { AgendamentoApi, AgendamentoRequestApi } from '../models/api.models';
+import { TOKEN_KEY, USER_KEY } from '../core/api.config';
+import { ApiService, apiErrorMessage } from './api.service';
 import { AudioService } from './audio.service';
 
+export interface SessionUser {
+  id: number;
+  name: string;
+  phone: string;
+}
+
+/**
+ * Estado global da aplicação: sessão do usuário (JWT), agendamentos, modais e toasts.
+ * Os dados persistem no backend; só o token e o usuário ficam no navegador.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class BookingStorageService {
-  private readonly STORAGE_KEY = 'navalha_ouro_appointments_v1';
-  private readonly USER_KEY = 'navalha_ouro_user_v1';
-
-  // Signals para reatividade pura do Angular 18
   readonly appointments = signal<BookingAppointment[]>([]);
   readonly isBookingModalOpen = signal<boolean>(false);
   readonly isAuthModalOpen = signal<boolean>(false);
   readonly selectedService = signal<ServiceItem | null>(null);
   readonly selectedBarber = signal<BarberStaff | null>(null);
-  readonly currentUser = signal<{ name: string; email: string; phone: string } | null>(null);
+  readonly currentUser = signal<SessionUser | null>(null);
   readonly toastMessage = signal<{ title: string; text: string; type: 'success' | 'info' | 'error' } | null>(null);
 
-  // Computed
-  readonly confirmedCount = computed(() => 
+  readonly confirmedCount = computed(() =>
     this.appointments().filter(a => a.status === 'confirmado').length
   );
 
-  constructor(private audioService: AudioService) {
-    this.loadInitialData();
+  constructor(
+    private readonly api: ApiService,
+    private readonly audioService: AudioService
+  ) {
+    this.restoreSession();
   }
 
-  private loadInitialData(): void {
-    if (typeof window === 'undefined') return;
+  // ---------------------------------------------------------------- sessão
 
+  private restoreSession(): void {
     try {
-      const saved = localStorage.getItem(this.STORAGE_KEY);
-      if (saved) {
-        this.appointments.set(JSON.parse(saved));
-      } else {
-        // Mock inicial de demonstração
-        const initialMock: BookingAppointment[] = [
-          {
-            id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
-            serviceId: 'combo-imperial',
-            serviceName: 'Combo Imperial (Cabelo + Barba Completa)',
-            barberId: 'julius',
-            barberName: 'Julius',
-            date: new Date().toISOString().split('T')[0],
-            time: '16:00',
-            clientName: 'Raquel Gomes',
-            clientPhone: '(31) 99887-6655',
-            clientEmail: 'raquel@exemplo.com',
-            price: 90,
-            status: 'confirmado',
-            createdAt: new Date().toISOString()
-          }
-        ];
-        this.appointments.set(initialMock);
-        this.saveToStorage(initialMock);
-      }
-
-      const savedUser = localStorage.getItem(this.USER_KEY);
-      if (savedUser) {
-        this.currentUser.set(JSON.parse(savedUser));
+      const token = localStorage.getItem(TOKEN_KEY);
+      const user = localStorage.getItem(USER_KEY);
+      if (token && user) {
+        this.currentUser.set(JSON.parse(user));
+        this.loadAppointments();
       }
     } catch {
-      // Ignora erro de serialização
+      this.clearSession();
     }
   }
 
-  private saveToStorage(list: BookingAppointment[]): void {
+  private saveSession(token: string, user: SessionUser): void {
+    this.currentUser.set(user);
     try {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(list));
+      localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
     } catch {
-      // Ignora
+      // sem persistência: a sessão vale só até recarregar a página
     }
   }
+
+  private clearSession(): void {
+    this.currentUser.set(null);
+    this.appointments.set([]);
+    try {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+    } catch {
+      // ignora
+    }
+  }
+
+  login(nome: string, telefone: string): Observable<void> {
+    return this.api.login({ nome, telefone }).pipe(
+      tap(res => {
+        this.saveSession(res.token, { id: res.usuarioId, name: res.nome, phone: telefone });
+        this.loadAppointments();
+        this.showToast('Bem-vindo!', `Olá, ${res.nome}! Conta conectada com sucesso.`, 'success');
+      }),
+      map(() => undefined)
+    );
+  }
+
+  /** Cria a conta e já entra com ela. */
+  register(nome: string, apelido: string, telefone: string): Observable<void> {
+    return this.api.cadastrar({ nome, apelido: apelido || undefined, telefone }).pipe(
+      switchMap(() => this.login(nome, telefone))
+    );
+  }
+
+  logout(): void {
+    this.clearSession();
+    this.showToast('Até logo', 'Você saiu da sua conta.', 'info');
+  }
+
+  /** Pede login antes de uma ação que precisa de conta (ex.: agendar). */
+  requireLogin(): void {
+    this.showToast('Entre na sua conta', 'Entre ou crie sua conta para confirmar o agendamento.', 'info');
+    this.isAuthModalOpen.set(true);
+  }
+
+  // ------------------------------------------------------------- agendamentos
+
+  loadAppointments(): void {
+    this.api.meusAgendamentos().subscribe({
+      next: lista => this.appointments.set(lista.map(a => this.mapAgendamento(a))),
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 401 || err.status === 403) {
+          this.expireSession();
+        } else {
+          this.showToast('Erro', apiErrorMessage(err, 'Não foi possível carregar seus agendamentos.'), 'error');
+        }
+      }
+    });
+  }
+
+  createAppointment(req: AgendamentoRequestApi): Observable<BookingAppointment> {
+    return this.api.criarAgendamento(req).pipe(
+      map(a => this.mapAgendamento(a)),
+      tap({
+        next: novo => {
+          this.appointments.set([novo, ...this.appointments()]);
+          this.audioService.playSuccessSound();
+          this.triggerBrowserNotification(novo);
+          this.showToast(
+            'Agendamento Confirmado! ✂️',
+            `${novo.serviceName} com ${novo.barberName} para o dia ${this.formatDate(novo.date)} às ${novo.time}.`,
+            'success'
+          );
+        },
+        error: (err: HttpErrorResponse) => this.handleActionError(err, 'Não foi possível concluir o agendamento.')
+      })
+    );
+  }
+
+  cancelAppointment(id: number): void {
+    this.api.cancelarAgendamento(id).subscribe({
+      next: atualizado => {
+        const novo = this.mapAgendamento(atualizado);
+        this.appointments.set(this.appointments().map(a => (a.id === id ? novo : a)));
+        this.audioService.playClickSound();
+        this.showToast('Agendamento Cancelado', 'Seu agendamento foi cancelado com sucesso.', 'info');
+      },
+      error: (err: HttpErrorResponse) => this.handleActionError(err, 'Não foi possível cancelar o agendamento.')
+    });
+  }
+
+  private handleActionError(err: HttpErrorResponse, fallback: string): void {
+    if (err.status === 401 || err.status === 403) {
+      this.expireSession();
+      return;
+    }
+    this.showToast('Ops!', apiErrorMessage(err, fallback), 'error');
+  }
+
+  private expireSession(): void {
+    this.clearSession();
+    this.showToast('Sessão expirada', 'Entre novamente para continuar.', 'info');
+    this.isAuthModalOpen.set(true);
+  }
+
+  private mapAgendamento(a: AgendamentoApi): BookingAppointment {
+    const status: BookingAppointment['status'] =
+      a.status === 'CANCELADO' || a.status === 'NAO_COMPARECEU' ? 'cancelado'
+      : a.status === 'FINALIZADO' ? 'concluido'
+      : 'confirmado';
+    return {
+      id: a.id,
+      code: 'AG-' + String(a.id).padStart(4, '0'),
+      serviceName: a.servico,
+      barberName: a.barbeiro,
+      date: a.data,
+      time: a.horaInicio.slice(0, 5),
+      clientName: a.usuario,
+      price: Number(a.valor),
+      status
+    };
+  }
+
+  private formatDate(iso: string): string {
+    const [y, m, d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  // ------------------------------------------------------------------ UI
 
   openBookingModal(service?: ServiceItem, barber?: BarberStaff): void {
     this.audioService.playClickSound();
@@ -96,59 +212,6 @@ export class BookingStorageService {
     this.isAuthModalOpen.set(false);
   }
 
-  saveUser(user: { name: string; email: string; phone: string }): void {
-    this.currentUser.set(user);
-    try {
-      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
-    } catch {}
-    this.showToast('Bem-vindo!', `Olá, ${user.name}! Conta conectada com sucesso.`, 'success');
-  }
-
-  logout(): void {
-    this.currentUser.set(null);
-    try {
-      localStorage.removeItem(this.USER_KEY);
-    } catch {}
-    this.showToast('Até logo', 'Você saiu da sua conta.', 'info');
-  }
-
-  createAppointment(appointment: Omit<BookingAppointment, 'id' | 'createdAt' | 'status'>): BookingAppointment {
-    const newBooking: BookingAppointment = {
-      ...appointment,
-      id: 'BK-' + Math.floor(10000 + Math.random() * 90000),
-      createdAt: new Date().toISOString(),
-      status: 'confirmado'
-    };
-
-    const updated = [newBooking, ...this.appointments()];
-    this.appointments.set(updated);
-    this.saveToStorage(updated);
-
-    // Efeito sonoro de vitória / confirmação
-    this.audioService.playSuccessSound();
-
-    // Notificação Web se autorizada
-    this.triggerBrowserNotification(newBooking);
-
-    this.showToast(
-      'Agendamento Confirmado! ✂️',
-      `${newBooking.serviceName} com ${newBooking.barberName} para o dia ${newBooking.date} às ${newBooking.time}.`,
-      'success'
-    );
-
-    return newBooking;
-  }
-
-  cancelAppointment(id: string): void {
-    const updated = this.appointments().map(item => 
-      item.id === id ? { ...item, status: 'cancelado' as const } : item
-    );
-    this.appointments.set(updated);
-    this.saveToStorage(updated);
-    this.audioService.playClickSound();
-    this.showToast('Agendamento Cancelado', 'Seu agendamento foi cancelado com sucesso.', 'info');
-  }
-
   showToast(title: string, text: string, type: 'success' | 'info' | 'error' = 'info'): void {
     this.toastMessage.set({ title, text, type });
     setTimeout(() => {
@@ -164,18 +227,13 @@ export class BookingStorageService {
 
   private triggerBrowserNotification(booking: BookingAppointment): void {
     if (typeof window !== 'undefined' && 'Notification' in window) {
+      const body = `Agendamento confirmado para ${this.formatDate(booking.date)} às ${booking.time}! Esperamos por você.`;
       if (Notification.permission === 'granted') {
-        new Notification('Barbearia Julius', {
-          body: `Agendamento confirmado para ${booking.date} às ${booking.time}! Esperamos por você.`,
-          icon: '/favicon.ico'
-        });
+        new Notification('Barbearia Julius', { body, icon: '/favicon.ico' });
       } else if (Notification.permission !== 'denied') {
         Notification.requestPermission().then(permission => {
           if (permission === 'granted') {
-            new Notification('Barbearia Julius', {
-              body: `Agendamento confirmado para ${booking.date} às ${booking.time}!`,
-              icon: '/favicon.ico'
-            });
+            new Notification('Barbearia Julius', { body, icon: '/favicon.ico' });
           }
         });
       }
