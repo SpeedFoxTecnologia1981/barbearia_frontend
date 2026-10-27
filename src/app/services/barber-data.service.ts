@@ -132,7 +132,7 @@ export class BarberDataService {
   readonly info = {
     name: 'Barbearia Julius',
     phone: '(31) 99358-0482',
-    whatsappUrl: 'https://wa.me/5531980208758?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20Barbearia',
+    whatsappUrl: 'https://wa.me/5531993580482?text=Ol%C3%A1!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20Barbearia',
     address: 'Rua Dirceu Martins Figueiredo 72, Jequitibá/ MG',
     schedule: 'Segunda a Sábado: 07:30 às 20:30 | Aos Domingos estamos fechados',
     instagram: '@barbeariajulius'
