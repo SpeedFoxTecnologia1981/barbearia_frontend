@@ -1,24 +1,14 @@
 <div class="modal-backdrop" *ngIf="bookingStorage.isAuthModalOpen()" (click)="close()">
   <div class="modal-dialog-box glass-card" (click)="$event.stopPropagation()">
-    
+
     <button class="modal-close-btn" (click)="close()" aria-label="Fechar Modal">✕</button>
 
     <!-- Cabeçalho & Abas -->
     <div class="auth-tabs-header">
-      <button 
-        type="button"
-        class="tab-btn" 
-        [class.active]="!isRegisterTab" 
-        (click)="switchTab(false)"
-      >
+      <button type="button" class="tab-btn" [class.active]="!isRegisterTab" (click)="switchTab(false)">
         Entrar na Conta
       </button>
-      <button 
-        type="button"
-        class="tab-btn" 
-        [class.active]="isRegisterTab" 
-        (click)="switchTab(true)"
-      >
+      <button type="button" class="tab-btn" [class.active]="isRegisterTab" (click)="switchTab(true)">
         Criar Nova Conta
       </button>
     </div>
@@ -29,40 +19,22 @@
       <!-- Nome -->
       <div class="modal-field">
         <label>{{ isRegisterTab ? 'Nome Completo *' : 'Nome *' }}</label>
-        <input
-          type="text"
-          name="name"
-          class="modal-input"
-          placeholder="Ex: Carlos Eduardo"
-          [(ngModel)]="name"
-          autocomplete="name"
-        />
+        <input type="text" name="name" class="modal-input" placeholder="Ex: Carlos Eduardo" [(ngModel)]="name"
+          autocomplete="name" />
       </div>
 
       <!-- Apelido (se cadastro) -->
       <div class="modal-field" *ngIf="isRegisterTab">
         <label>Como gosta de ser chamado</label>
-        <input
-          type="text"
-          name="nickname"
-          class="modal-input"
-          placeholder="Ex: Dudu"
-          maxlength="100"
-          [(ngModel)]="nickname"
-        />
+        <input type="text" name="nickname" class="modal-input" placeholder="Ex: Dudu" maxlength="100"
+          [(ngModel)]="nickname" />
       </div>
 
       <!-- Telefone / WhatsApp -->
       <div class="modal-field">
         <label>WhatsApp / Celular *</label>
-        <input
-          type="tel"
-          name="phone"
-          class="modal-input"
-          placeholder="(31) 98020-8758"
-          [(ngModel)]="phone"
-          autocomplete="tel"
-        />
+        <input type="tel" name="phone" class="modal-input" placeholder="(31) 99358-0482" [(ngModel)]="phone"
+          autocomplete="tel" />
       </div>
 
       <p class="auth-hint" *ngIf="!isRegisterTab">
