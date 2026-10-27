@@ -7,7 +7,6 @@ import { ServicesSectionComponent } from './components/services-section/services
 import { BarbersSectionComponent } from './components/barbers-section/barbers-section.component';
 import { BookingWidgetComponent } from './components/booking-widget/booking-widget.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
-import { TestimonialsSectionComponent } from './components/testimonials-section/testimonials-section.component';
 import { LocationFaqComponent } from './components/location-faq/location-faq.component';
 import { BookingModalComponent } from './components/booking-modal/booking-modal.component';
 import { AuthModalComponent } from './components/auth-modal/auth-modal.component';
@@ -26,7 +25,6 @@ import { FooterComponent } from './components/footer/footer.component';
     BarbersSectionComponent,
     BookingWidgetComponent,
     MyAppointmentsComponent,
-    TestimonialsSectionComponent,
     LocationFaqComponent,
     BookingModalComponent,
     AuthModalComponent,
