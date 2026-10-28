@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
-import { FeaturesComponent } from './components/features/features.component';
 import { ServicesSectionComponent } from './components/services-section/services-section.component';
 import { BarbersSectionComponent } from './components/barbers-section/barbers-section.component';
 import { BookingWidgetComponent } from './components/booking-widget/booking-widget.component';
@@ -20,7 +19,6 @@ import { FooterComponent } from './components/footer/footer.component';
     CommonModule,
     NavbarComponent,
     HeroComponent,
-    FeaturesComponent,
     ServicesSectionComponent,
     BarbersSectionComponent,
     BookingWidgetComponent,

@@ -28,7 +28,6 @@
     <nav class="desktop-nav">
       <button class="nav-link" (click)="scrollToSection('servicos')">Serviços</button>
       <button class="nav-link" (click)="scrollToSection('barbeiros')">Barbeiros</button>
-      <button class="nav-link" (click)="scrollToSection('diferenciais')">Diferenciais</button>
       <button class="nav-link" (click)="scrollToSection('agendamento')">Agendamento</button>
       <button class="nav-link" (click)="scrollToSection('meus-agendamentos')" *ngIf="bookingStorage.appointments().length > 0">
         Meus Cortes
@@ -90,7 +89,6 @@
       <button (click)="scrollToSection('hero')">Início</button>
       <button (click)="scrollToSection('servicos')">Serviços & Preços</button>
       <button (click)="scrollToSection('barbeiros')">O Especialista</button>
-      <button (click)="scrollToSection('diferenciais')">Diferenciais</button>
       <button (click)="scrollToSection('agendamento')">Agendar Horário</button>
       <button (click)="scrollToSection('meus-agendamentos')" *ngIf="bookingStorage.appointments().length > 0">
         Meus Agendamentos ({{ bookingStorage.appointments().length }})

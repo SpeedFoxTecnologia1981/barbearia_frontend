@@ -50,28 +50,51 @@
         </div>
       </div>
 
-      <!-- Lado Direito: Perguntas Frequentes (FAQ) -->
-      <div class="faq-container">
-        <div class="faq-header">
+      <!-- Lado Direito: Pagamento & QR Code PIX -->
+      <div class="payment-card glass-card">
+        <div class="payment-header">
           <div class="section-tag badge-gold">
-            <span>DÚVIDAS FREQUENTES</span>
+            <span>PAGAMENTO</span>
           </div>
-          <h2>Perguntas <span class="gradient-text-gold">Comuns</span></h2>
+          <h2 class="payment-title">Pague Rápido via <span class="gradient-text-gold">PIX</span></h2>
+          <p class="payment-desc">Escaneie o QR Code abaixo com o app do seu banco para pagamento prático e imediato.</p>
         </div>
 
-        <div class="faq-accordion-list">
-          <div 
-            class="faq-item glass-card"
-            *ngFor="let item of barberData.faqs; let i = index"
-            [class.expanded]="openFaqIndex === i"
-          >
-            <button class="faq-trigger" (click)="toggleFaq(i)">
-              <span class="faq-question">{{ item.question }}</span>
-              <span class="faq-arrow-icon">{{ openFaqIndex === i ? '−' : '+' }}</span>
+        <!-- Box do QR Code -->
+        <div class="qrcode-box">
+          <div class="qrcode-wrapper">
+            <img src="/images/qrcode-pix.svg" alt="QR Code PIX Barbearia Julius" class="qrcode-image" />
+          </div>
+          <div class="pix-badge-pill">
+            <span class="pix-icon">❖</span>
+            <span class="pix-badge-text">PIX Instantâneo</span>
+          </div>
+        </div>
+
+        <!-- Chave Copia e Cola -->
+        <div class="pix-copy-section">
+          <span class="pix-copy-label">Ou copie a chave PIX (E-mail):</span>
+          <div class="pix-copy-row">
+            <input 
+              type="text" 
+              class="pix-key-input" 
+              readonly 
+              [value]="pixKey" 
+              aria-label="Chave PIX"
+            />
+            <button class="btn-gold btn-copy-pix" (click)="copyPixKey()">
+              <span>{{ isPixCopied ? '✓ Copiado!' : 'Copiar' }}</span>
             </button>
-            <div class="faq-answer-body" *ngIf="openFaqIndex === i">
-              <p>{{ item.answer }}</p>
-            </div>
+          </div>
+        </div>
+
+        <!-- Outras formas no balcão -->
+        <div class="accepted-methods">
+          <span class="methods-label">Também aceitamos no balcão:</span>
+          <div class="methods-tags">
+            <span class="method-pill">💳 Crédito</span>
+            <span class="method-pill">💳 Débito</span>
+            <span class="method-pill">💵 Dinheiro</span>
           </div>
         </div>
       </div>

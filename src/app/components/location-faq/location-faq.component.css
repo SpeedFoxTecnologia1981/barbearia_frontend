@@ -75,62 +75,164 @@
   font-weight: 500;
 }
 
-/* Lado Direito: FAQ */
-.faq-header {
-  margin-bottom: 2rem;
-}
-
-.faq-header h2 {
-  font-size: 2.2rem;
-  color: #fff;
-  margin-top: 0.8rem;
-}
-
-.faq-accordion-list {
+/* Lado Direito: Pagamento & QR Code */
+.payment-card {
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 
-.faq-item {
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+.payment-header {
+  margin-bottom: 1.6rem;
 }
 
-.faq-item.expanded {
-  border-color: var(--border-gold);
+.payment-title {
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
-.faq-trigger {
-  width: 100%;
-  padding: 1.3rem 1.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-  gap: 1rem;
-}
-
-.faq-question {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.faq-arrow-icon {
-  font-size: 1.4rem;
-  color: var(--gold-400);
-  font-weight: bold;
-}
-
-.faq-answer-body {
-  padding: 0 1.6rem 1.4rem 1.6rem;
-  color: var(--text-muted);
+.payment-desc {
   font-size: 0.95rem;
-  line-height: 1.65;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  padding-top: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Box do QR Code */
+.qrcode-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  margin-bottom: 1.8rem;
+}
+
+.qrcode-wrapper {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(205, 162, 53, 0.2);
+  border: 2px solid var(--gold-400);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.qrcode-wrapper:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(205, 162, 53, 0.35);
+}
+
+.qrcode-image {
+  width: 180px;
+  height: 180px;
+  display: block;
+}
+
+.pix-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding: 0.4rem 1rem;
+  background: rgba(50, 188, 173, 0.12);
+  border: 1px solid rgba(50, 188, 173, 0.35);
+  border-radius: 50px;
+  color: #32bcad;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pix-icon {
+  font-size: 0.95rem;
+}
+
+/* Chave PIX Copia e Cola */
+.pix-copy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.6rem;
+}
+
+.pix-copy-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.pix-copy-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.pix-key-input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  background: rgba(10, 10, 14, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: monospace;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.pix-key-input:focus {
+  border-color: var(--gold-400);
+}
+
+.btn-copy-pix {
+  padding: 0.8rem 1.4rem;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Formas Aceitas no Balcão */
+.accepted-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.methods-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.methods-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.method-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: #ffffff;
 }
 
 @media (max-width: 992px) {

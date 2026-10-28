@@ -63,7 +63,7 @@ export class BarberDataService {
         rating: 4.98,
         totalReviews: 840,
         photo: '/images/barbeiro1.jpg',
-        bio: 'Especialista em cortes clássicos executivos e barba rústica italiana na navalha afiada.',
+        bio: '',
         specialties: ['Navalha Clássica', 'Corte Tradicional']
       };
     }

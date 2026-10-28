@@ -27,7 +27,7 @@
         <div class="barber-info">
           <h3 class="barber-name">{{ barber.name }}</h3>
           <span class="barber-role text-gold">{{ barber.role }}</span>
-          <p class="barber-bio">{{ barber.bio }}</p>
+          <p class="barber-bio" *ngIf="barber.bio">{{ barber.bio }}</p>
 
           <div class="specialties-wrap">
             <span class="specialty-pill" *ngFor="let spec of barber.specialties">

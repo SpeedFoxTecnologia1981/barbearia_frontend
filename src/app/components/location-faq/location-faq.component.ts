@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BarberDataService } from '../../services/barber-data.service';
 import { AudioService } from '../../services/audio.service';
+import { BookingStorageService } from '../../services/booking-storage.service';
 
 @Component({
   selector: 'app-location-faq',
@@ -11,15 +12,24 @@ import { AudioService } from '../../services/audio.service';
   styleUrl: './location-faq.component.css'
 })
 export class LocationFaqComponent {
-  openFaqIndex: number | null = 0;
+  readonly pixKey = 'contato@barbeariajulius.com.br';
+  isPixCopied = false;
 
   constructor(
     public barberData: BarberDataService,
-    private audioService: AudioService
+    private audioService: AudioService,
+    private bookingStorage: BookingStorageService
   ) {}
 
-  toggleFaq(index: number): void {
+  copyPixKey(): void {
     this.audioService.playClickSound();
-    this.openFaqIndex = this.openFaqIndex === index ? null : index;
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(this.pixKey).catch(() => {});
+    }
+    this.isPixCopied = true;
+    this.bookingStorage.showToast('Chave PIX Copiada!', 'A chave foi copiada com sucesso para a área de transferência.', 'success');
+    setTimeout(() => {
+      this.isPixCopied = false;
+    }, 3000);
   }
 }
