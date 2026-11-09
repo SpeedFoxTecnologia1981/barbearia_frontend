@@ -18,17 +18,11 @@
 
       <!-- Nome -->
       <div class="modal-field">
-        <label>{{ isRegisterTab ? 'Nome Completo *' : 'Nome / Apelido *' }}</label>
+        <label>{{ isRegisterTab ? 'Nome ou Apelido *' : 'Nome ou Apelido *' }}</label>
         <input type="text" name="name" class="modal-input" placeholder="Ex: Carlos Eduardo" [(ngModel)]="name"
           autocomplete="name" />
       </div>
 
-      <!-- Apelido (se cadastro) -->
-      <div class="modal-field" *ngIf="isRegisterTab">
-        <label>Como gosta de ser chamado</label>
-        <input type="text" name="nickname" class="modal-input" placeholder="Ex: Dudu" maxlength="100"
-          [(ngModel)]="nickname" />
-      </div>
 
       <!-- Telefone / WhatsApp -->
       <div class="modal-field">
