@@ -18,7 +18,7 @@
 
       <!-- Nome -->
       <div class="modal-field">
-        <label>{{ isRegisterTab ? 'Nome Completo *' : 'Nome *' }}</label>
+        <label>{{ isRegisterTab ? 'Nome Completo *' : 'Nome / Apelido *' }}</label>
         <input type="text" name="name" class="modal-input" placeholder="Ex: Carlos Eduardo" [(ngModel)]="name"
           autocomplete="name" />
       </div>
@@ -33,7 +33,7 @@
       <!-- Telefone / WhatsApp -->
       <div class="modal-field">
         <label>WhatsApp / Celular *</label>
-        <input type="tel" name="phone" class="modal-input" placeholder="(31) 99541-0772" [(ngModel)]="phone"
+        <input type="tel" name="phone" class="modal-input" placeholder="99541-0772" [(ngModel)]="phone"
           autocomplete="tel" />
       </div>
 
